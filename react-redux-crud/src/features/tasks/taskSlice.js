@@ -1,12 +1,36 @@
-import { createSlice } from '@reduxjs/toolkit'
-export const taskSlice = createSlice ({
-    name: 'tasks',
-    initialState: [],
-    reducers: {
+import { createSlice } from "@reduxjs/toolkit";
 
+const initialState = [
+  {
+    id: "1",
+    title: "Task 1",
+    description: "Task 1 descrpzione",
+    completed: false,
+  },
+  {
+    id: "2",
+    title: "Task 2",
+    description: "Task 2 descrpzione",
+    completed: false,
+  },
+];
+
+export const taskSlice = createSlice({
+  name: "tasks",
+  initialState, //initialState: [initialState],
+  reducers: {
+    addTask: (state, action) => {
+      state.push(action.payload);
+    },
+    deleteTask: (state,action) => {
+        const taskFound = state.find(task => task.id === action.payload)
+        if (taskFound) {
+            state.splice(state.indexOf(taskFound), 1)
+        }
     }
-})
+  },
+});
 
-
-export  const tasksReducer = taskSlice.reducer
+export const { addTask, deleteTask } = taskSlice.actions;
+export const tasksReducer = taskSlice.reducer;
 
